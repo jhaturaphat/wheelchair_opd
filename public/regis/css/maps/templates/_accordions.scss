@@ -1,0 +1,48 @@
+.accordion-section{
+    .accordion-holder{
+        margin-top: 60px;
+        .panel-default{
+            box-shadow: none;
+            border-radius: 0;
+            .panel-heading{
+                background: $light;
+                padding: 0;
+                border-radius: 0;
+                h4{
+                    position: relative;
+                    a{
+                        font-weight: bold;
+                        font-family: $primary-font;
+                        font-size: 20px;
+                        display: block;
+                        background: $primary-color;
+                        color: $light;
+                        padding: 20px 30px;
+                        transition: all .3s ease;
+                        &:before{
+                            content: '\f106';
+                            position: absolute;
+                            right: 20px;
+                            font-family: FontAwesome;
+                        }
+                        &.collapsed{
+                            background: $light;
+                            color: $black;
+                            &:before{
+                                content: '\f107';
+                                position: absolute;
+                                font-family: FontAwesome;
+                            }
+                            &:hover{
+                                color: $primary-color;
+                            }   
+                        }
+                    }
+                }
+            }
+            .panel-body{
+                padding: 20px 30px;
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+.cta{
+    padding: 40px 0;
+    .cta-block{
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+        @include tablet {
+            flex-direction: column;
+        }
+        .emmergency{
+            background: $primary-color;
+            a{
+                color: $light;
+                font-size: 30px;
+            }
+            p{
+                padding-top: 20px;
+            }
+        }
+        .top-doctor{
+            background: lighten($color: $primary-color, $amount: 5%);
+            .btn-main{
+                margin-top: 10px;
+                color: $light;
+                border: 1px solid $light;
+                padding: 10px 20px;
+                transition: all .3s ease;
+                &:hover{
+                    background: $light;
+                    color: $primary-color;
+                }
+            }
+        }
+        .working-time{
+            background: lighten($color: $primary-color, $amount: 10%);
+            ul{
+                margin: 0;
+                padding: 0;
+                li{
+                    color: $light;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    span{
+                        float: right;
+                    }
+                    &:not(:last-child){
+                        border-bottom: 1px solid $light;
+                    }
+                }
+            }
+        }
+        .item{
+            padding: 20px 30px;
+            flex-basis: 33.33%;
+            i,h2,p{
+                transition: all .2s ease;
+                color: $light;
+            }
+            i{
+                font-size: 30px;
+                margin-bottom: 20px;
+            }
+            h2{
+                font-weight: normal;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-size: 25px;
+                margin-bottom: 30px;
+            }
+            p{
+                font-size: 16px;
+                line-height: 19px;
+            }
+        }
+    }
+}

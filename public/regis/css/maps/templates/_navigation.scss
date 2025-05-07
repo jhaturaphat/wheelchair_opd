@@ -1,0 +1,91 @@
+@-webkit-keyframes menu_sticky {
+  0% {
+    margin-top: -150px;
+  }
+
+  50% {
+    margin-top: -130px;
+  }
+
+  100% {
+    margin-top: 0;
+  }
+}
+
+
+@keyframes menu_sticky {
+  0% {
+    margin-top: -150px;
+  }
+
+  50% {
+    margin-top: -130px;
+  }
+
+  100% {
+    margin-top: 0;
+  }
+}
+
+
+.main-header {
+  position: relative;
+  width: 100%;
+  z-index: 9999;
+  margin-bottom: -60px;
+  background: rgba(0, 0, 0, 0.66);
+  transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -webkit-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  margin: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.66);
+  transition: all 500ms ease;
+  -webkit-animation-name: menu_sticky;
+  animation-name: menu_sticky;
+  -webkit-animation-duration: 0.60s;
+  animation-duration: 0.60s;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  box-shadow: 0px 3px 20px 0px rgba(0, 0, 0, 0.11);
+}
+
+.navbar{
+  margin-bottom: 0;
+  background: $primary-color;
+  border: none;
+  border-radius: 0;
+  .navbar-nav{
+    li{
+      a{
+        font-family: $primary-font;
+        font-size: 17px;        
+        color: $light;
+        text-transform: uppercase;
+        padding: 25px 20px;
+        &:hover{
+          color: $light;
+        }
+      }
+      &.active{
+        a{
+          background: transparent;
+          color: $light;
+          font-weight: bold;
+          &:hover{
+            background: transparent;
+            color: $light;
+          }
+        }
+      }
+    }
+  }
+}
