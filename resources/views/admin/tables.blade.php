@@ -517,6 +517,7 @@ $queryString = LINE_API_URI . http_build_query($queryStrings);
     }
 
 
+    //จ่ายงาน
     $('#submit-form').submit(function (e) {
         e.preventDefault();
         let formData = new FormData(this);

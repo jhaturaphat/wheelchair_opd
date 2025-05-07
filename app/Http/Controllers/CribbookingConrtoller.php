@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Notifications\TelegramNotification;
+use Illuminate\Support\Facades\Notification;
+
 class CribbookingConrtoller extends Controller
 {
     public function Cribbooking()
@@ -231,6 +234,9 @@ class CribbookingConrtoller extends Controller
                 // header('Content-Type: text/html; charset=utf8');
                 // $res = notify_message($message);
                 // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
+
+                Notification::send(null, new TelegramNotification($message));
+                echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
             }else {
                 echo "<script>alert('กรุณากรอกข้อมูล');</script>";
             }
