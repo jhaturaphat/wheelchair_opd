@@ -235,7 +235,7 @@ class CribbookingConrtoller extends Controller
                 // $res = notify_message($message);
                 // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
 
-                Notification::send(null, new TelegramNotification($message));
+                Notification::send(null, new TelegramNotification($message,"2026925804"));
                 echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
             }else {
                 echo "<script>alert('กรุณากรอกข้อมูล');</script>";

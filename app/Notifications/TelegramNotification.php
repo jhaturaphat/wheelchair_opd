@@ -13,6 +13,7 @@ class TelegramNotification extends Notification
     use Queueable;
 
     protected $message;
+    protected $chatId;
 
     /**
      * Create a new notification instance.
@@ -43,8 +44,12 @@ class TelegramNotification extends Notification
      */
     public function toTelegram($notifiable)
     {
+        // ใช้ chat_id จาก parameter หรือจาก notifiable หรือจาก config ตามลำดับ
+        $chatId = $this->chatId 
+                ?? $notifiable->telegram_chat_id 
+                ?? config('services.telegram.chat_id');
         $botToken = config('services.telegram.bot_token');
-        $chatId = config('services.telegram.chat_id');
+        // $chatId = config('services.telegram.chat_id');
 
         Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
             'chat_id' => $chatId,
