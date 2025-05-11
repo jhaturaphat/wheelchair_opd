@@ -41,6 +41,8 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/tables', 'AdminController@tables')->name('tables');
     Route::get('/summary', 'AdminController@summary')->name('summary');
     Route::get('/otherform', 'AdminController@otherform')->name('otherform');
+    // Telegram
+    Route::get('/telegram', 'TelegramController@getUpdateLast')->name('telegram');
 
 });
 

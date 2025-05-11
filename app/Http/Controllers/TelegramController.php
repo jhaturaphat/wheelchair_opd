@@ -11,7 +11,7 @@ class TelegramController extends Controller
     public function getUpdates()
     {
         $token = config('telegram.telegram_bot_token');
-        $response = Http::get("https://api.telegram.org/{$token}/getUpdates");
+        $response = Http::get("https://api.telegram.org/bot{$token}/getUpdates");
         $updates = $response->json();
         
         foreach ($updates['result'] as $update) {
@@ -26,7 +26,7 @@ class TelegramController extends Controller
     // ดึกข้อมูลล่าสุดจาก bot telegram
     public function getUpdateLast(){
         $token = config('telegram.telegram_bot_token');
-        $response = Http::get("https://api.telegram.org/{$token}/getUpdates");
+        $response = Http::get("https://api.telegram.org/bot{$token}/getUpdates");
         
         if($response->failed()){
             return response()->json(['error' => 'Failed to fetch data'], 500);

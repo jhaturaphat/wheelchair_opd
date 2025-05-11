@@ -9,7 +9,11 @@
                         Dashboard
                     </a>
 					
-                    <a class="nav-link"  href="<?php echo $queryString; ?>">
+                    {{-- <a class="nav-link"  href="<?php //echo $queryString; ?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                        ลงทะเบียนรับแจ้งเตือน.
+                    </a> --}}
+                    <a class="nav-link"  href="telegram">
                         <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                         ลงทะเบียนรับแจ้งเตือน.
                     </a>
