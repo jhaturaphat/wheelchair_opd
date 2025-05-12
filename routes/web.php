@@ -45,6 +45,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('telegram', 'TelegramController@getUpdateLast')->name('telegram');
     Route::get('telegram/{query}', 'TelegramController@search')->name('telegram');
     Route::post('telegram', 'TelegramController@store')->name('telegram');
+    Route::get('telegram.show', 'TelegramController@show')->name('telegram.show');
 
 });
 

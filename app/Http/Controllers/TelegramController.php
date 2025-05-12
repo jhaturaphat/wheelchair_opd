@@ -12,6 +12,11 @@ use App\Token;
 
 class TelegramController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function getUpdates()
     {
         $token = config('telegram.telegram.bot_token');
@@ -64,6 +69,7 @@ class TelegramController extends Controller
         }
     }
 
+    // ค้นหาพนักงานจากฐานข้อมูล
     public function search($query){
         return Token::select("id","ssn_name")->where('ssn_name','LIKE','%'.$query.'%')->get();
     }
@@ -71,6 +77,41 @@ class TelegramController extends Controller
 
     // บันทึกข้อมูล chat ID
     public function store(Request $request){
-        var_dump($request);
+        
+        // กำหนดกฎการ validate
+    $validatedData = $request->validate([
+        'id' => 'required|string',
+        'chatid' => 'required|string',
+        'fullname' => 'required|string|min:8|max:100',
+        // เพิ่มฟิลด์อื่นๆ ที่ต้องการ validate
+    ]);
+    if($validatedData){        
+        $model = Token::find($request->input('id'));
+        $chatID = $model->telegram_chat_id;
+        $model->telegram_chat_id = $request->input('chatid');
+        // ต่อข้อความแบบ หลายบรรทัด
+        $message = <<<EOT
+            ✅ลงทะเบียนสำเร็จแล้ว
+            🙋‍♂️{$model->ssn_name}
+        EOT;
+        // อัพเดทฐานข้อมูล
+        if(empty($chatID) && $model->save()){
+            Notification::send(null, new TelegramNotification($message, $request->input('chatid')));
+            $model = Token::findOrFail($request->input('id'));                      
+            return view('telegram.show', [
+                'model'=>$model,
+                'success' => '✅ ลงทะเบียนสำเร็จแล้ว'
+            ]);                       
+        }
+        // ย้อนกลับหากมี Error
+        return back()->with('error', '🚫 ผู้ใช้นี้เคยลงทะเบียนกับเราแล้วครับ');       
+    }
+    return back()->with('error', 'ข้อมูลไม่ครบกรุณาค้นหา ชื่อ-สกุล ใหม่'); 
+    
+    }
+
+    // หน้าแสดงรายละเอียด
+    public function show(){
+        return view("telegram.show");
     }
 }

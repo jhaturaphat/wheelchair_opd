@@ -5,15 +5,22 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <h1>Message Details</h1>
+<div class="container">    
+    <h1>ลงทะเบียน Telegram</h1>
 
     {{-- ตรวจสอบก่อนว่ามีข้อมูล --}}
     @if(isset($data))
         <div class="card">
             <div class="card-header">
                 ลงทะเบียนแจ้งเตือน Telegram
+                <img src="{{ asset('img/telegram.svg') }}" alt="ไอคอน" width="32" height="32">                
             </div>
+            @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
             <div class="card-body">
                 {{-- ข้อมูลผู้ส่ง --}}
                 <h5>From:</h5>
@@ -28,21 +35,24 @@
                     <strong>Text:</strong> {{ $data['message']['text'] ?? 'No text' }}<br>
                     <strong>Date:</strong> {{ date('Y-m-d H:i:s', $data['message']['date']) }}<br>
                     @isset($data['message']['entities'])
-                        <strong>Command:</strong> {{ $data['message']['entities'][0]['type'] }}
+                        <strong>ComYmand:</strong> {{ $data['message']['entities'][0]['type'] }}
                     @endisset
                 </div>
                 
-                <form action="/telegram" method="POST">
+                <form action="{{route('telegram')}}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="chatid">Telegram ID</label>
-                        <input type="text" class="form-control" id="chatid" disabled value="{{ $data['message']['from']['id'] }}">
-                        
+                        <input type="text" class="form-control" id="chatid" name="chatid" readonly value="{{ $data['message']['from']['id'] }}">                        
                     </div>
-                    <input type="hidden" id="id">
+                    <div class="form-group">
+                        <label for="chatid">รหัส</label>
+                        <input type="text" class="form-control" id="id" name="id" readonly>
+                    </div>
                     <div class="form-group">
                         <label for="fullname">ชื่อ-นามสุกล</label>
-                        <input type="text" class="form-control" id="fullname">
-                        <small id="emailHelp" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
+                        <input type="text" class="form-control" id="fullname" name="fullname">
+                        <small id="fullname" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
                     </div>
                     
                     <button type="submit" class="btn btn-primary">บันทึก</button>
