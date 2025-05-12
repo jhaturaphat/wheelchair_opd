@@ -20,9 +20,10 @@ class TelegramNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($message, $chatId)
     {
-        //
+        $this->message = $message;
+        $this->chatId = $chatId;
     }
 
     /**
@@ -44,18 +45,12 @@ class TelegramNotification extends Notification
      */
     public function toTelegram($notifiable)
     {
-        // ใช้ chat_id จาก parameter หรือจาก notifiable หรือจาก config ตามลำดับ
-        $chatId = $this->chatId 
-                ?? $notifiable->telegram_chat_id 
-                ?? config('services.telegram.chat_id');
-        $botToken = config('telegram.telegram.bot_token');
-        // $chatId = config('services.telegram.chat_id');
-
-        Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-            'chat_id' => $chatId,
+        return [
+            'token' => config('telegram.telegram.bot_token'),
+            'chat_id' => $this->chatId,
             'text' => $this->message,
             'parse_mode' => 'HTML'
-        ]);
+        ];
     }
 
     /**
