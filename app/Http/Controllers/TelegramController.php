@@ -10,7 +10,7 @@ class TelegramController extends Controller
 {
     public function getUpdates()
     {
-        $token = config('telegram.telegram_bot_token');
+        $token = config('telegram.telegram.bot_token');
         $response = Http::get("https://api.telegram.org/bot{$token}/getUpdates");
         $updates = $response->json();
         
@@ -25,7 +25,7 @@ class TelegramController extends Controller
 
     // ดึกข้อมูลล่าสุดจาก bot telegram
     public function getUpdateLast(){
-        $token = config('telegram.telegram_bot_token');
+        $token = config('telegram.telegram.bot_token');
         $response = Http::get("https://api.telegram.org/bot{$token}/getUpdates");
         
         if($response->failed()){

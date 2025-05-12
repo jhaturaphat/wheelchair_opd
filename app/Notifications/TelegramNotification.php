@@ -48,7 +48,7 @@ class TelegramNotification extends Notification
         $chatId = $this->chatId 
                 ?? $notifiable->telegram_chat_id 
                 ?? config('services.telegram.chat_id');
-        $botToken = config('services.telegram.bot_token');
+        $botToken = config('telegram.telegram.bot_token');
         // $chatId = config('services.telegram.chat_id');
 
         Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
