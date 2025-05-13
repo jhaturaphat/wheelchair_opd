@@ -42,6 +42,7 @@ class TelegramController extends Controller
         }
         
         $data = $response->json();
+        
 
         if (empty($data['result'])) {
             return response()->json(['error' => 'No messages found'], 404);
@@ -54,18 +55,17 @@ class TelegramController extends Controller
             return response()->json(['error' => 'Invalid message format'], 400);
         }
 
-        $chat_id = $last_message['message']['from']['id'];
-        if($last_message['message']['text'] === '/start'){           
-            try {
-                // Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
-                return view('telegram.index')->with('data', $last_message);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'error' => 'Notification failed',
-                    'message' => $e->getMessage()
-                ], 500);
-            }         
-        }
+        $chat_id = $last_message['message']['from']['id'];       
+               
+        try {
+            // Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
+            return view('telegram.index')->with('data', $last_message);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Notification failed',
+                'message' => $e->getMessage()
+            ], 500);
+        } 
     }
 
     public function testNotify($chat_id){

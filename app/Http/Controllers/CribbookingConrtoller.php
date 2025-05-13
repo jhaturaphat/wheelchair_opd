@@ -106,7 +106,7 @@ class CribbookingConrtoller extends Controller
                         ];
                     }else if($req->select_ssn == '2'){
                         $token = Token::where('ssn_name',$req->name_ssn)->first();
-                        $ref = $token->ssn_token;
+                        $ref = $token->telegram_chat_id;
                         // dd($noti->service);
                         $header = "*คุณมีงานเข้า*";
                         // แอดเพิ่มตรงนี้
@@ -136,18 +136,9 @@ class CribbookingConrtoller extends Controller
                                     $equipment <> ""  ||
                                     $equipment_type <> ""  ||
                                     $send <> "" || $note <> "" || $danger_note <> "" ) {
-                                    $res = $this->sendlinemesg($ref);
-                                    header('Content-Type: text/html; charset=utf8');
-                                    $res = notify_message($message);
-                                    if($res->message == "ok"){
-                                        $status = [
-                                            'status' => true
-                                        ];
-                                    }else{
-                                        $status = [
-                                            'status' => false
-                                        ];
-                                    }
+                                    
+                                    Notification::send(null, new TelegramNotification($message, $ref));
+                                    $status = ['status' => true];
                             }else {
                                 $status = [
                                     'status' => false
@@ -168,7 +159,7 @@ class CribbookingConrtoller extends Controller
         DB::commit();
         return $status;
     }
-
+//  🤖🤖 ส่งเข้ากลุ่มใหญ่
     function save(Request $req){
         $token = DB::table('service_tokens')->where('service',$req->service)->first();
         $token_id = $token->token;
@@ -235,7 +226,7 @@ class CribbookingConrtoller extends Controller
                 // $res = notify_message($message);
                 // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
 
-                Notification::send(null, new TelegramNotification($message,"2026925804"));
+                // Notification::send(null, new TelegramNotification($message,"2026925804"));                
                 echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
             }else {
                 echo "<script>alert('กรุณากรอกข้อมูล');</script>";
