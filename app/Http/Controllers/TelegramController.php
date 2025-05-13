@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\TelegramNotification;
-use App\User;
 use App\Token;
 
 class TelegramController extends Controller
@@ -58,7 +57,7 @@ class TelegramController extends Controller
         $chat_id = $last_message['message']['from']['id'];
         if($last_message['message']['text'] === '/start'){           
             try {
-                // Notification::send(null, new TelegramNotification('คุณชื่ออะไร ครับ', $chat_id));
+                // Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
                 return view('telegram.index')->with('data', $last_message);
             } catch (\Exception $e) {
                 return response()->json([
@@ -69,6 +68,9 @@ class TelegramController extends Controller
         }
     }
 
+    public function testNotify($chat_id){
+        Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
+    }
     // ค้นหาพนักงานจากฐานข้อมูล
     public function search($query){
         return Token::select("id","ssn_name")->where('ssn_name','LIKE','%'.$query.'%')->get();
@@ -91,7 +93,7 @@ class TelegramController extends Controller
         $model->telegram_chat_id = $request->input('chatid');
         // ต่อข้อความแบบ หลายบรรทัด
         $message = <<<EOT
-            ✅ลงทะเบียนสำเร็จแล้ว
+            ✅ลงทะเบียนสำเร็จแล้ว ค่ะ
             🙋‍♂️{$model->ssn_name}
         EOT;
         // อัพเดทฐานข้อมูล
@@ -100,13 +102,13 @@ class TelegramController extends Controller
             $model = Token::findOrFail($request->input('id'));                      
             return view('telegram.show', [
                 'model'=>$model,
-                'success' => '✅ ลงทะเบียนสำเร็จแล้ว'
+                'success' => '✅ลงทะเบียนสำเร็จแล้ว'
             ]);                       
         }
         // ย้อนกลับหากมี Error
-        return back()->with('error', '🚫 ผู้ใช้นี้เคยลงทะเบียนกับเราแล้วครับ');       
+        return back()->with('error', '🚫 ผู้ใช้นี้เคยลงทะเบียนกับเราแล้ว ค่ะ');       
     }
-    return back()->with('error', 'ข้อมูลไม่ครบกรุณาค้นหา ชื่อ-สกุล ใหม่'); 
+    return back()->with('error', 'ข้อมูลไม่ครบกรุณาค้นหา ชื่อ-สกุล ใหม่ แล้วเลือกจากรายการค้นหา'); 
     
     }
 

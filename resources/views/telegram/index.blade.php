@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-header">
                 ลงทะเบียนแจ้งเตือน Telegram
-                <img src="{{ asset('img/telegram.svg') }}" alt="ไอคอน" width="32" height="32">                
+                <img src="{{ asset('img/telegram.svg') }}" alt="ไอคอน" width="32" height="32">   
             </div>
             @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -23,14 +23,14 @@
             @endif
             <div class="card-body">
                 {{-- ข้อมูลผู้ส่ง --}}
-                <h5>From:</h5>
+                <h5>ข้อมูลผู้ส่ง:</h5>
                 <ul>
                     <li>User ID: {{ $data['message']['from']['id'] }}</li>
                     <li>Name: {{ $data['message']['from']['first_name'] }} {{ $data['message']['from']['last_name'] ?? '' }}</li>
                 </ul>
 
                 {{-- ข้อมูลข้อความ --}}
-                <h5 class="mt-3">Message:</h5>
+                <h5 class="mt-3">ข้อมูลข้อความ:</h5>
                 <div class="alert alert-primary">
                     <strong>Text:</strong> {{ $data['message']['text'] ?? 'No text' }}<br>
                     <strong>Date:</strong> {{ date('Y-m-d H:i:s', $data['message']['date']) }}<br>
@@ -42,16 +42,17 @@
                 <form action="{{route('telegram')}}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="chatid">Telegram ID</label>
-                        <input type="text" class="form-control" id="chatid" name="chatid" readonly value="{{ $data['message']['from']['id'] }}">                        
+                        <label for="chatid"></label>
+                        <input type="hidden" class="form-control" id="chatid" name="chatid" readonly value="{{ $data['message']['from']['id'] }}">                        
+                        <button id="testNotify" type="button" class="btn btn-info" value="{{ $data['message']['from']['id'] }}" >ส่งทดสอบ</button>    
                     </div>
                     <div class="form-group">
                         <label for="chatid">รหัส</label>
-                        <input type="text" class="form-control" id="id" name="id" readonly>
+                        <input type="text" class="form-control" id="id" name="id" readonly required>
                     </div>
                     <div class="form-group">
                         <label for="fullname">ชื่อ-นามสุกล</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname">
+                        <input type="text" class="form-control" id="fullname" name="fullname" autocomplete="off">
                         <small id="fullname" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
                     </div>
                     
@@ -115,9 +116,17 @@ document.querySelector("#fullname").addEventListener("selection", function (even
     // "event.detail" carries the autoComplete.js "feedback" object
     document.getElementById("id").value = event.detail.selection.value.id;
     document.getElementById("fullname").value = event.detail.selection.value.ssn_name;
-    console.log(event.detail);
+    // console.log(event.detail);
 });
 
+
+document.querySelector("#testNotify").addEventListener("click", async function (event) {
+    event.preventDefault();
+    const respone = await  fetch(`{{URL('telegram.test')}}/`+this.value);
+    if(!respone.ok) throw new Error(`Response status: ${response.status}`);
+    alert('สำเร็จ');
+
+});
 
 </script>
 
