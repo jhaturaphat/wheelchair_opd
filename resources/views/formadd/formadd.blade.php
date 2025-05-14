@@ -136,7 +136,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="Showdata">ดูตารางการขอ</a>
+                        <a class="dropdown-item" href="showdata">ดูตารางการขอ</a>
                         <a class="dropdown-item" href="showsucc">ดูรายการที่สำเร็จ</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -696,7 +696,7 @@
                         btnClass: 'btn btn-success',
                         action: function () {
                             // par_func();
-                            window.open('Showdata', '_parent');
+                            window.open('showdata', '_parent');
                         }
                     },
                 }

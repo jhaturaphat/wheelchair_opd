@@ -682,7 +682,7 @@ class AdminController extends Controller
                         $equipment <> ""  ||
                         $equipment_type <> ""  ||
                         $send <> "" || $note <> "" || $danger_note <> "" ) {
-                        
+                        $res = (object) ['message' => 'ok']; 
                         Notification::send(null, new TelegramNotification($message, $ref));
                         $status = ['status' => true];  
 

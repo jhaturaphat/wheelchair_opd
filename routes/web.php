@@ -25,7 +25,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/select_depart', 'CribbookingConrtoller@select_depart')->name('select_depart');
     Route::get('/Cribbooking', 'CribbookingConrtoller@Cribbooking')->name('Cribbooking');
-    Route::get('/Showdata', 'CribbookingConrtoller@Showdata')->name('Showdata');
+    Route::get('/showdata', 'CribbookingConrtoller@Showdata')->name('showdata');
     Route::get('/showsucc', 'CribbookingConrtoller@showsucc')->name('showsucc');
 });
 
