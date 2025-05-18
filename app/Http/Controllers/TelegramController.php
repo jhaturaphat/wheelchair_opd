@@ -97,7 +97,8 @@ class TelegramController extends Controller
             🙋‍♂️{$model->ssn_name}
         EOT;
         // อัพเดทฐานข้อมูล
-        if(empty($chatID) && $model->save()){
+        
+        if((strlen($chatID) < 3) && $model->save()){
             Notification::send(null, new TelegramNotification($message, $request->input('chatid')));
             $model = Token::findOrFail($request->input('id'));                      
             return view('telegram.show', [

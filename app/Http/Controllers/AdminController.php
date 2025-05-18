@@ -6,15 +6,9 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\books_drives;
 use App\Token;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use PhpParser\Node\Expr\Cast\Bool_;
-use PhpParser\Parser\Tokens;
-
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\TelegramNotification;
 
@@ -94,9 +88,11 @@ class AdminController extends Controller
                 $datetime <> "" ||
                 $send <> ""  ||
                 $note <> "") {
-                //$res = $this->sendlinemesg($token_id);
-                //header('Content-Type: text/html; charset=utf8');
-                //$res = notify_message($message);
+
+                $res = (object) ['message' => 'ok']; 
+                // $res = $this->sendlinemesg($token_id);
+                // header('Content-Type: text/html; charset=utf8');
+                // $res = notify_message($message);
                 // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
             }else {
                 echo "<script>alert('กรุณากรอกข้อมูล');</script>";
@@ -104,14 +100,14 @@ class AdminController extends Controller
         }else{
 
         }
-        // if($res->message == "ok"){
-        //     $status = 'success';
-        // }else{
-        //     $status = 'error';
-        // }
+        if($res->message == "ok"){
+            $status = 'success';
+        }else{
+            $status = 'error';
+        }
         DB::commit();
 
-        return $status = 'success';
+        return $status;
     }
 
 
@@ -635,7 +631,6 @@ class AdminController extends Controller
         return $data;
     }
 
-    // 🤖 ส่งแจ้งเตือนให้พนักงาน 🤖
     function conFirm(Request $req){
         $token = Token::where('id',$req->token_id)->first();
         //  DB::beginTransaction();
@@ -682,20 +677,27 @@ class AdminController extends Controller
                         $equipment <> ""  ||
                         $equipment_type <> ""  ||
                         $send <> "" || $note <> "" || $danger_note <> "" ) {
-                        $res = (object) ['message' => 'ok']; 
-                        Notification::send(null, new TelegramNotification($message, $ref));
-                        $status = ['status' => true];  
-
+                    $res = (object) ['message' => 'ok']; 
+                    Notification::send(null, new TelegramNotification($message, $ref));
+                        // $res = $this->sendlinemesg($ref);
+                        // header('Content-Type: text/html; charset=utf8');
+                        // $res = notify_message($message);
+                        // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
                     }else {
                         echo "<script>alert('กรุณากรอกข้อมูล');</script>";
                     }
         }else{
 
         }
-         $status = [
+        if($res->message == "ok"){
+            $status = [
                 'status' => true
             ];
-        
+        }else{
+            $status = [
+                'status' => false
+            ];
+        }
         // DB::commit();
         return $status;
     }
@@ -704,7 +706,7 @@ class AdminController extends Controller
     function confirm_edit(Request $req){
         $token = Token::where('id',$req->token_id)->first();
         //  DB::beginTransaction();
-        $ref = $token->telegram_chat_id;
+        $ref = $token->ssn_token;
         $id = $req->idHidden2;
         $confirm = Book::where('ID', $id)->update([
                 'verify' => 1,
@@ -733,64 +735,73 @@ class AdminController extends Controller
                         $equipment <> ""  ||
                         $equipment_type <> ""  ||
                         $send <> "") {
-                        
-                        Notification::send(null, new TelegramNotification($message, $ref));
-                        $status = ['status' => true];            
+                        // $res = $this->sendlinemesg($ref);
+                        // header('Content-Type: text/html; charset=utf8');
+                        // $res = notify_message($message);
+                        // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
                     }else {
                         echo "<script>alert('กรุณากรอกข้อมูล');</script>";
                     }
         }else{
 
         }
-        
+        if($res->message == "ok"){
+            $status = [
+                'status' => true
+            ];
+        }else{
+            $status = [
+                'status' => false
+            ];
+        }
         // DB::commit();
         return $status;
     }
 
 
-    // function sendlinemesg($param){
+    function sendlinemesg($param){
 
-    //     define('LINE_API' , "https://notify-api.line.me/api/notify");
-    //     define('LINE_TOKEN' , $param);
+        define('LINE_API' , "https://notify-api.line.me/api/notify");
+        define('LINE_TOKEN' , $param);
 
 
-    //     function notify_message($message){
-    //         $queryData = array('message' => $message ,'stickerPackageId' => '6359' ,'stickerId' => '11069870');
-    //         $queryData = http_build_query($queryData,'','&');
-    //         $headerOptions = array(
-    //             'http'=>array(
-    //                 'method'=>'POST',
-    //                 'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
-    //                         ."Authorization: Bearer ".LINE_TOKEN."\r\n"
-    //                         ."Content-Length: ".strlen($queryData)."\r\n",
-    //                 'content' => $queryData
-    //             )
-    //         );
-    //         $context = stream_context_create($headerOptions);
-    //         $result = file_get_contents(LINE_API,FALSE,$context);
-    //         $res = json_decode($result);
-    //         return $res;
+        function notify_message($message){
+            $queryData = array('message' => $message ,'stickerPackageId' => '6359' ,'stickerId' => '11069870');
+            $queryData = http_build_query($queryData,'','&');
+            $headerOptions = array(
+                'http'=>array(
+                    'method'=>'POST',
+                    'header'=> "Content-Type: application/x-www-form-urlencoded\r\n"
+                            ."Authorization: Bearer ".LINE_TOKEN."\r\n"
+                            ."Content-Length: ".strlen($queryData)."\r\n",
+                    'content' => $queryData
+                )
+            );
+            $context = stream_context_create($headerOptions);
+            $result = file_get_contents(LINE_API,FALSE,$context);
+            $res = json_decode($result);
+            return $res;
 
-    //     }
+        }
 
-    //     // function notify_message($message){
-    //     //     $queryData = array('message' => $message);
-    //     //     $queryData = http_build_query($queryData,'','&');
-    //     //     $headerOption = array(
-    //     //         'http' => array(
-    //     //             'method' => 'POST',
-    //     //             'header' => "Content-type: application/x-www-form-urlencoded\r\n"
-    //     //                         ."Authorization: Bearer ".LINE_TOKEN."\r\n"
-    //     //                         ."Content-Length".strlen($queryData)."\r\n",
-    //     //             'content' => $queryData
-    //     //         )
-    //     //     );
-    //     //     $context = stream_context_create($headerOption);
-    //     //     $result = file_get_contents(LINE_API, FALSE ,$context);
-    //     //     $res = json_decode($result);
-    //     //     return $res;
-    //     // }
-    // }
+        // function notify_message($message){
+        //     $queryData = array('message' => $message);
+        //     $queryData = http_build_query($queryData,'','&');
+        //     $headerOption = array(
+        //         'http' => array(
+        //             'method' => 'POST',
+        //             'header' => "Content-type: application/x-www-form-urlencoded\r\n"
+        //                         ."Authorization: Bearer ".LINE_TOKEN."\r\n"
+        //                         ."Content-Length".strlen($queryData)."\r\n",
+        //             'content' => $queryData
+        //         )
+        //     );
+        //     $context = stream_context_create($headerOption);
+        //     $result = file_get_contents(LINE_API, FALSE ,$context);
+        //     $res = json_decode($result);
+        //     return $res;
+        // }
+    }
 
     function softDelete(Request $req){
         $id = $req->get_id;

@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Notifications\TelegramNotification;
-use Illuminate\Support\Facades\Notification;
-
 class CribbookingConrtoller extends Controller
 {
     public function Cribbooking()
@@ -106,7 +103,7 @@ class CribbookingConrtoller extends Controller
                         ];
                     }else if($req->select_ssn == '2'){
                         $token = Token::where('ssn_name',$req->name_ssn)->first();
-                        $ref = $token->telegram_chat_id;
+                        $ref = $token->ssn_token;
                         // dd($noti->service);
                         $header = "*คุณมีงานเข้า*";
                         // แอดเพิ่มตรงนี้
@@ -136,9 +133,21 @@ class CribbookingConrtoller extends Controller
                                     $equipment <> ""  ||
                                     $equipment_type <> ""  ||
                                     $send <> "" || $note <> "" || $danger_note <> "" ) {
-                                    
-                                    Notification::send(null, new TelegramNotification($message, $ref));
-                                    $status = ['status' => true];
+                                    // $res = $this->sendlinemesg($ref);
+                                    // header('Content-Type: text/html; charset=utf8');
+                                    // $res = notify_message($message);
+
+                                     $res = (object) ['message' => 'ok']; 
+
+                                    if($res->message == "ok"){
+                                        $status = [
+                                            'status' => true
+                                        ];
+                                    }else{
+                                        $status = [
+                                            'status' => false
+                                        ];
+                                    }
                             }else {
                                 $status = [
                                     'status' => false
@@ -159,7 +168,7 @@ class CribbookingConrtoller extends Controller
         DB::commit();
         return $status;
     }
-//  🤖🤖 ส่งเข้ากลุ่มใหญ่
+
     function save(Request $req){
         $token = DB::table('service_tokens')->where('service',$req->service)->first();
         $token_id = $token->token;
@@ -221,28 +230,27 @@ class CribbookingConrtoller extends Controller
                 $send <> ""  ||
                 $datetime <> "" ||
                 $note <> "") {
+
+                
+                $res = (object) ['message' => 'ok']; 
                 // $res = $this->sendlinemesg($token_id);
                 // header('Content-Type: text/html; charset=utf8');
                 // $res = notify_message($message);
                 // echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
-
-                // Notification::send(null, new TelegramNotification($message,"2026925804"));                
-                echo "<script>alert('ลงทะเบียนเรียบร้อย');</script>";
             }else {
                 echo "<script>alert('กรุณากรอกข้อมูล');</script>";
             }
         }else{
 
         }
+        if($res->message == "ok"){
+            $status = 'success';
+        }else{
+            $status = 'error';
+        }
         DB::commit();
-        // if($res->message == "ok"){
-        //     $status = 'success';
-        // }else{
-        //     $status = 'error';
-        // }
-        // DB::commit();
 
-        return $status = 'success';
+        return $status;
     }
 
     function sendlinemesg($token){
@@ -428,7 +436,6 @@ class CribbookingConrtoller extends Controller
                         ->count();
         return $count;
     }
-    
     function count_wait(Request $req){
         $section = $req->section;
         $count['book'] = DB::table('books')
