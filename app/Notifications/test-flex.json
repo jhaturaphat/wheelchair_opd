@@ -1,0 +1,71 @@
+{
+    "datas": ["3340701740851"],
+    "messages": [
+        {
+            "type": "flex",
+            "size": "giga",
+            "altText": "แจ้งเตือนรหัส OTP",
+            "contents": {
+                "type": "bubble",
+                "hero": {
+                    "type": "image",
+                    "url": "https://phr1.moph.go.th/moph_account_center1.png",
+                    "size": "full",
+                    "aspectRatio": "20:8",
+                    "aspectMode": "cover"
+                },
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "md",
+                    "backgroundColor": "#40F500FF",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "แจ้งเตือนรหัส OTP",
+                            "weight": "bold",
+                            "size": "xl",
+                            "color": "#206803FF",
+                            "align": "center",
+                            "gravity": "center",
+                            "wrap": true,
+                            "contents": []
+                        },
+                        {
+                            "type": "box",
+                            "layout": "vertical",
+                            "spacing": "sm",
+                            "contents": [
+                                {
+                                    "type": "box",
+                                    "layout": "baseline",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "123456",
+                                            "weight": "bold",
+                                            "size": "4xl",
+                                            "color": "#F52702FF",
+                                            "flex": 4,
+                                            "align": "center",
+                                            "wrap": true,
+                                            "contents": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": "เพื่อความปลอดภัยกรุณาเก็บเป็นความลับ ห้ามเปิดเผยรหัส OTPแก่บุคคลอื่นไม่ว่ากรณีใดๆ",
+                            "weight": "regular",
+                            "wrap": true,
+                            "contents": []
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

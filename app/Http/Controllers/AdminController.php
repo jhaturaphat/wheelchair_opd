@@ -632,6 +632,7 @@ class AdminController extends Controller
     }
 
     function conFirm(Request $req){
+        //หา ChatID ของพนักงาน
         $token = Token::where('id',$req->token_id)->first();
         //  DB::beginTransaction();
         $ref = $token->telegram_chat_id;
@@ -671,6 +672,17 @@ class AdminController extends Controller
                     "\n". "🔊หมายเหตุ: " . $equipment_note .
                     "\n". "🏥สถานที่ส่ง: " . $send .
                     "\n". "⏱ระดับความเร่งด่วน: " . $note . " " . $danger_note;
+
+            $obj_data = [
+                'service'   => $service,
+                'name'      => $name,
+                'pickup'    => $pickup,
+                'bednumber' => $bednumber,
+                'equipment' => $equipment.",".$equipment_type,
+                'equipment_note' => $equipment_note,
+                'send'      => $send,
+                'note'      => $note . " " . $danger_note
+            ];
                 if ($service <> "" ||
                         $pickup <> ""  ||
                         $bednumber <> ""  ||
@@ -678,6 +690,7 @@ class AdminController extends Controller
                         $equipment_type <> ""  ||
                         $send <> "" || $note <> "" || $danger_note <> "" ) {
                     $res = (object) ['message' => 'ok']; 
+                    // ส่งการแจ้งเตือนไปยัง Telegram
                     Notification::send(null, new TelegramNotification($message, $ref));
                         // $res = $this->sendlinemesg($ref);
                         // header('Content-Type: text/html; charset=utf8');
@@ -716,7 +729,7 @@ class AdminController extends Controller
 
         if($confirm == 1 ){
             $noti = Book::where('ID', $id)->first();
-
+            $res = [];
             $header = "งานส่งต่อ";
             // แอดเพิ่มตรงนี้
             $pickup = $noti->pickup;
@@ -724,7 +737,7 @@ class AdminController extends Controller
             $equipment = $noti->equipment;
             $equipment_type = $noti->equipment_type;
             $send = $noti->send;
-
+            
             $message = $header.
                         "\n". "🏨สถานที่รับ: " . $pickup .
                         "\n". "🛌หมายเลขเตียง: " . $bednumber .
@@ -735,6 +748,7 @@ class AdminController extends Controller
                         $equipment <> ""  ||
                         $equipment_type <> ""  ||
                         $send <> "") {
+                            
                         // $res = $this->sendlinemesg($ref);
                         // header('Content-Type: text/html; charset=utf8');
                         // $res = notify_message($message);
@@ -745,7 +759,8 @@ class AdminController extends Controller
         }else{
 
         }
-        if($res->message == "ok"){
+        
+        if($res["message"] == "ok"){
             $status = [
                 'status' => true
             ];
