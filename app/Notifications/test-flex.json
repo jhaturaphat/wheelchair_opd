@@ -9,7 +9,7 @@
                 "type": "bubble",
                 "hero": {
                     "type": "image",
-                    "url": "https://phr1.moph.go.th/moph_account_center1.png",
+                    "url": "https://detudomhospital.moph.go.th/web/img/icon/icon-line.png",
                     "size": "full",
                     "aspectRatio": "20:8",
                     "aspectMode": "cover"

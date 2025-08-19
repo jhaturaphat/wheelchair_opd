@@ -1,31 +1,23 @@
 {
-    "datas": ["3340701740851"],
-    "messages": [
+    "datas":["3340701740851"],
+    "messages":[
         {
             "type": "flex",
-            "size": "giga",
-            "body": {                
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                    {
-                        "type": "text",
-                        "text": "Brown Store",
-                        "weight": "bold",
-                        "size": "xxl",
-                        "margin": "md"
-                    },
-                    {
-                        "type": "separator",
-                        "margin": "xxl"
-                    },
-                    {
-                        "type": "box",
-                        "layout": "vertical",
-                        "margin": "xxl",
-                        "spacing": "sm",
-                        "contents": [
-                            {
+            "altText": "แจ้งเตือนรหัส OTP",
+            "contents": {
+                "type": "bubble",
+                "hero": {
+                    "type": "image",
+                    "url": "https://detudomhospital.moph.go.th/web/img/icon/icon-line.png",
+                    "size": "full",
+                    "aspectRatio": "20:4",
+                    "aspectMode": "cover"
+                },
+                "body":{
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "md",
+                    "contents":[{
                                 "type": "box",
                                 "layout": "horizontal",
                                 "contents": [
@@ -144,38 +136,7 @@
                                     }
                                 ]
                             }
-                        ]
-                    },
-                    {
-                        "type": "separator",
-                        "margin": "xxl"
-                    },
-                    {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "margin": "md",
-                        "contents": [
-                            {
-                                "type": "text",
-                                "text": "วันที่",
-                                "size": "xs",
-                                "color": "#aaaaaa",
-                                "flex": 0
-                            },
-                            {
-                                "type": "text",
-                                "text": "#743289384279",
-                                "color": "#aaaaaa",
-                                "size": "xs",
-                                "align": "end"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "styles": {
-                "footer": {
-                    "separator": true
+                    ]
                 }
             }
         }
