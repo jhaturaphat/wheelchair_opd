@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use App\Notifications\TelegramNotification;
 

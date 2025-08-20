@@ -3,11 +3,9 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MorpromtAlert extends Notification
+class MorpromtNotification extends Notification
 {
     use Queueable;
 
@@ -45,10 +43,10 @@ class MorpromtAlert extends Notification
     public function toMorpromt($notifiable)
     {
         return [
-            'secretkey' => config('morpromt.secretkey'),
-            'username' => config('morpromt.username'),
-            'password' => config('morpromt.password'),
-            'hoscode' => config('morpromt.hoscode'),
+            'secretkey' => config('telegram.morpromt.secretkey'),
+            'username' => config('telegram.morpromt.username'),
+            'password' => config('telegram.morpromt.password'),
+            'hoscode' => config('telegram.morpromt.hoscode'),
             'chat_id' => $this->chatId,
             'messages' => $this->messages
         ];

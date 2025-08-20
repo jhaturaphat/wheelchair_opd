@@ -63,6 +63,7 @@ Route::post('search_2', 'AdminController@search_2');
 Route::post('save','CribbookingConrtoller@save');
 Route::post('sent_to','CribbookingConrtoller@sent_to');
 Route::get('notify','NotifyController@notify');
+Route::get('test','NotifyController@test');
 Route::post('save_token','NotifyController@save_token');
 
 Route::post('dataTable/booking','AdminController@dataBooking');

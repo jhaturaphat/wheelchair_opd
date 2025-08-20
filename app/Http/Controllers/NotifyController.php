@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\MorpromtNotification;
 use App\Token;
 use App\role_tokens;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,11 @@ class NotifyController extends Controller
 {
     public function notify(){
         return view('admin.notify.callback');
+        
+    }
+
+    public function test(){
+        return Notification::send(null, new MorpromtNotification([], "3340701740851"));
     }
 
     public function regis(){
