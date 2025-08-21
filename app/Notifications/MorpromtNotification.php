@@ -42,11 +42,7 @@ class MorpromtNotification extends Notification
      */
     public function toMorpromt($notifiable)
     {
-        return [
-            'secretkey' => config('telegram.morpromt.secretkey'),
-            'username' => config('telegram.morpromt.username'),
-            'password' => config('telegram.morpromt.password'),
-            'hoscode' => config('telegram.morpromt.hoscode'),
+        return [            
             'chat_id' => $this->chatId,
             'messages' => $this->messages
         ];
