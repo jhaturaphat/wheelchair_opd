@@ -664,6 +664,19 @@ class AdminController extends Controller
             $note = $noti->note;
             $danger_note = $noti->danger_note;
             $service = $noti->service;
+            $level = "";
+            switch($note){
+                case "3":
+                    $level = "🚨ด่วนสุด";
+                    break;
+                case "2":
+                    $level = "⚠️ด่วน";
+                    break;
+                default:
+                    $level = "✅ปกติ";
+                    break;
+
+            }
 
             $message = $header.
                     "\n". "📃บริการ: " . $service .
@@ -683,7 +696,7 @@ class AdminController extends Controller
                 'equipment' => $equipment.",".$equipment_type,
                 'equipment_note' => $equipment_note,
                 'send'      => $send,
-                'note'      => $note . " " . $danger_note
+                'note'      => $level. " " . $danger_note
             ];
                 if ($service <> "" ||
                         $pickup <> ""  ||

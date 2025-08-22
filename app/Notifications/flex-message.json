@@ -6,11 +6,12 @@
             "altText": "คูนย์เปล รพร.เดชอุดม",
             "contents": {
                 "type": "bubble",
+                "size": "giga",
                 "hero": {
                     "type": "image",
-                    "url": "https://detudomhospital.moph.go.th/web/img/icon/icon-line.png",
+                    "url": "https://detudomhospital.moph.go.th/web/img/icon/icon-line2.png",
                     "size": "full",
-                    "aspectRatio": "20:4",
+                    "aspectRatio": "20:5",
                     "aspectMode": "cover"
                 },
                 "body":{
@@ -24,7 +25,7 @@
                             "contents": [
                                 {
                                     "type": "text",
-                                    "text": "บริการ",
+                                    "text": "📃บริการ",
                                     "size": "sm",
                                     "color": "#555555",
                                     "flex": 0

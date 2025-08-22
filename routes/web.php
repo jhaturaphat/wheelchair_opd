@@ -47,6 +47,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::post('telegram', 'TelegramController@store')->name('telegram');
     Route::get('telegram.show', 'TelegramController@show')->name('telegram.show');
     Route::get('telegram.test/{chatid}', 'TelegramController@testNotify')->name('telegram.test');
+    Route::get('telegram.morpromt/{chatid}', 'TelegramController@testMorpromt')->name('telegram.morpromt');
 
 });
 

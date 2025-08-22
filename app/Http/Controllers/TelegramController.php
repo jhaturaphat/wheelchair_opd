@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use Illuminate\Http\Request;
+
+use App\Notifications\MorpromtNotification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -68,12 +70,16 @@ class TelegramController extends Controller
         } 
     }
 
-    public function testNotify($chat_id){
-        Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
+    public function testNotify($chat_id){        
+        Notification::send(null, new MorpromtNotification([], $chat_id));
+    }
+
+    public function testMorpromt($chat_id){        
+        Notification::send(null, new MorpromtNotification([], $chat_id));
     }
     // ค้นหาพนักงานจากฐานข้อมูล
     public function search($query){
-        return Token::select("id","ssn_name")->where('ssn_name','LIKE','%'.$query.'%')->get();
+        return Token::select("id","ssn_id","ssn_name")->where('ssn_name','LIKE','%'.$query.'%')->get();
     }
     
 

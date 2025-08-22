@@ -55,6 +55,12 @@
                         <input type="text" class="form-control" id="fullname" name="fullname" autocomplete="off">
                         <small id="fullname" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
                     </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="ssn_id">
+                        <button class="btn btn-success" id="testMorpromt">ทดสอบ หมอพร้อม</button>
+                        <label class="text-muted" id="testfullname">ทดสอบ หมอพร้อม</label>
+                    </div>
                     
                     <button type="submit" class="btn btn-primary">บันทึก</button>
                     
@@ -115,7 +121,9 @@ const autoCompleteJS = new autoComplete({
 document.querySelector("#fullname").addEventListener("selection", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     document.getElementById("id").value = event.detail.selection.value.id;
+    document.getElementById("ssn_id").value = event.detail.selection.value.ssn_id;
     document.getElementById("fullname").value = event.detail.selection.value.ssn_name;
+    document.getElementById("testfullname").innerHTML = event.detail.selection.value.ssn_name;
     // console.log(event.detail);
 });
 
@@ -125,7 +133,14 @@ document.querySelector("#testNotify").addEventListener("click", async function (
     const respone = await  fetch(`{{URL('telegram.test')}}/`+this.value);
     if(!respone.ok) throw new Error(`Response status: ${response.status}`);
     alert('สำเร็จ');
+});
 
+document.querySelector("#testMorpromt").addEventListener("click", async function (event) {
+    event.preventDefault();
+    let ssn = document.getElementById("ssn_id").value;
+    const respone = await  fetch(`{{URL('telegram.morpromt')}}/`+ssn);
+    if(!respone.ok) throw new Error(`Response status: ${response.status}`);
+    alert('สำเร็จ');
 });
 
 </script>

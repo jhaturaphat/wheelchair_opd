@@ -38,15 +38,15 @@ class MorpromtChanel
 
         // 3. กำหนดข้อมูลใหม่ที่ต้องการอัปเดตในรูปแบบ key-value array
         $data_to_update = [
-            '__CID__'      => '3340701740851', // $data['chat_id'] LINE ID หรือข้อมูลที่ต้องการ
-            '__SERVICE__'  => $data['service'] ?? "ไม่มี", 
-            '__FULLNAME__' => $data['name'] ?? "ไม่มี",
-            '__POINT__'    => $data['pickup'] ?? "ไม่มี",
-            '__BEDNO__'    => $data['bednumber'] ?? "ไม่มี",
-            '__CAR__'      => $data['equipment'] ?? "ไม่มี",
-            '__NOTE__'     => $data['equipment_note'] ?? "ไม่มี",
-            '__ENDPOINT__' => $data['send'] ?? "ไม่มี",
-            '__LEVEL__'    => $data['note'] ?? "ไม่มี",
+            '__CID__'      => $data['chat_id'], // $data['chat_id'] LINE ID หรือข้อมูลที่ต้องการ
+            '__SERVICE__'  => $data['messages']['service'] ?? "ทดสอบ", 
+            '__FULLNAME__' => $data['messages']['name'] ?? "ทดสอบ",
+            '__POINT__'    => $data['messages']['pickup'] ?? "ทดสอบ",
+            '__BEDNO__'    => $data['messages']['bednumber'] ?? "ทดสอบ",
+            '__CAR__'      => $data['messages']['equipment'] ?? "ทดสอบ",
+            '__NOTE__'     => $data['messages']['equipment_note'] ?? "ทดสอบ",
+            '__ENDPOINT__' => $data['messages']['send'] ?? "ทดสอบ",
+            '__LEVEL__'    => $data['messages']['note'] ?? "ทดสอบ",
             '__DATE__'     => "วันที่ ".date("Y-m-d เวลา H:i:s", time())
         ];
 
