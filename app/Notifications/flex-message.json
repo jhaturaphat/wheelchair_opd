@@ -1,9 +1,9 @@
 {
-    "datas":["3340701740851"],
+    "datas":["__CID__"],
     "messages":[
         {
             "type": "flex",
-            "altText": "แจ้งเตือนรหัส OTP",
+            "altText": "คูนย์เปล รพร.เดชอุดม",
             "contents": {
                 "type": "bubble",
                 "hero": {
@@ -17,7 +17,28 @@
                     "type": "box",
                     "layout": "vertical",
                     "spacing": "md",
-                    "contents":[{
+                    "contents":[
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "บริการ",
+                                    "size": "sm",
+                                    "color": "#555555",
+                                    "flex": 0
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "__SERVICE__",
+                                    "size": "sm",
+                                    "color": "#111111",
+                                    "align": "end"
+                                }
+                            ]
+                        },
+                        {
                                 "type": "box",
                                 "layout": "horizontal",
                                 "contents": [
@@ -30,7 +51,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "นางสาว สมมุติ งามมากหลาย",
+                                        "text": "__FULLNAME__",
                                         "size": "sm",
                                         "color": "#111111",
                                         "align": "end"
@@ -50,7 +71,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "รพ.ohepno",
+                                        "text": "__POINT__",
                                         "size": "sm",
                                         "color": "#111111",
                                         "align": "end"
@@ -68,7 +89,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "hello, world",
+                                        "text": "__BEDNO__",
                                         "align": "end"
                                     }
                                 ]
@@ -84,7 +105,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "hello, world",
+                                        "text": "__CAR__",
                                         "align": "end"
                                     }
                                 ]
@@ -99,7 +120,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "hello, world",
+                                        "text": "__NOTE__",
                                         "align": "end"
                                     }
                                 ]
@@ -115,7 +136,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "hello, world",
+                                        "text": "__ENDPOINT__",
                                         "align": "end"
                                     }
                                 ]
@@ -131,11 +152,25 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "hello, world",
+                                        "text": "__LEVEL__",
                                         "align": "end"
                                     }
                                 ]
+                            },
+                            {
+                                "type": "separator",
+                                "margin": "xs"
                             }
+                    ]
+                },
+                "footer": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "__DATE__"
+                        }
                     ]
                 }
             }

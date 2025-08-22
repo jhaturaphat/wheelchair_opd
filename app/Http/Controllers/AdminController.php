@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Book;
 use App\books_drives;
+use App\Notifications\MorpromtNotification;
 use App\Token;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -636,6 +637,7 @@ class AdminController extends Controller
         $token = Token::where('id',$req->token_id)->first();
         //  DB::beginTransaction();
         $ref = $token->telegram_chat_id;
+        $cid = $token->ssn_id;
         $id = $req->idHidden;
         $confirm = Book::where('ID', $id)->update([
                 'verify' => 1,
@@ -691,7 +693,8 @@ class AdminController extends Controller
                         $send <> "" || $note <> "" || $danger_note <> "" ) {
                     $res = (object) ['message' => 'ok']; 
                     // ส่งการแจ้งเตือนไปยัง Telegram
-                    Notification::send(null, new TelegramNotification($message, $ref));
+                    // Notification::send(null, new TelegramNotification($message, $ref));
+                    Notification::send(null, new MorpromtNotification($obj_data, $cid));
                         // $res = $this->sendlinemesg($ref);
                         // header('Content-Type: text/html; charset=utf8');
                         // $res = notify_message($message);
@@ -720,6 +723,7 @@ class AdminController extends Controller
         $token = Token::where('id',$req->token_id)->first();
         //  DB::beginTransaction();
         $ref = $token->ssn_token;
+        $cid = $token->ssn_id;
         $id = $req->idHidden2;
         $confirm = Book::where('ID', $id)->update([
                 'verify' => 1,

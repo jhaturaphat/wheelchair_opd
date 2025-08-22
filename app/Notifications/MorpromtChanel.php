@@ -8,29 +8,76 @@ use App\Models\Morpromt;
 
 class MorpromtChanel
 {    
-    private int $tokenTtl = 86400;
+    // private int $tokenTtl = 86400;
     public function send($notifiable, MorpromtNotification $notification)    
     {
         $data = $notification->toMorpromt($notifiable);
-        $result = $this->getTokenCach();
-        dd($result);
-        
+        $token = $this->getTokenCach();
+        $api = config('morpromt.configs.api')."/api/v2/send-message/send-now";        
+
+        $flex_message = $this->UpdateFlexJson($data);
+        $payload = json_decode($flex_message, true);
+
+        $response = Http::timeout(30)
+        ->withToken($token)
+        ->withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post($api, $payload);     
+        if($response->getStatusCode() === 200){
+            return TRUE;
+        }
+    }
+
+    public function UpdateFlexJson($data): string{
+        $json_file_path = __DIR__."/flex-message.json";
+        $json_template_string = file_get_contents($json_file_path);
+        // ตรวจสอบว่าอ่านไฟล์ได้หรือไม่
+        if ($json_template_string === false) {
+            die('ไม่พบไฟล์ หรือไม่สามารถอ่านไฟล์ได้');
+        }
+
+        // 3. กำหนดข้อมูลใหม่ที่ต้องการอัปเดตในรูปแบบ key-value array
+        $data_to_update = [
+            '__CID__'      => '3340701740851', // $data['chat_id'] LINE ID หรือข้อมูลที่ต้องการ
+            '__SERVICE__'  => $data['service'] ?? "ไม่มี", 
+            '__FULLNAME__' => $data['name'] ?? "ไม่มี",
+            '__POINT__'    => $data['pickup'] ?? "ไม่มี",
+            '__BEDNO__'    => $data['bednumber'] ?? "ไม่มี",
+            '__CAR__'      => $data['equipment'] ?? "ไม่มี",
+            '__NOTE__'     => $data['equipment_note'] ?? "ไม่มี",
+            '__ENDPOINT__' => $data['send'] ?? "ไม่มี",
+            '__LEVEL__'    => $data['note'] ?? "ไม่มี",
+            '__DATE__'     => "วันที่ ".date("Y-m-d เวลา H:i:s", time())
+        ];
+
+        // 4. เตรียม array สำหรับการค้นหาและแทนที่
+        $placeholders = array_keys($data_to_update);
+        $new_values   = array_values($data_to_update);
+
+        // 5. ใช้ str_replace เพื่อแทนที่ทุก placeholder ในครั้งเดียว
+        $final_flex_message = str_replace($placeholders, $new_values, $json_template_string);
+
+        // 6. แสดงผลลัพธ์        
+        return $final_flex_message;
+
     }
 
     public function getTokenCach(){
         $tokenModel = Morpromt::first();
-        if($tokenModel){      
-            if($this->getTokenExpirationTime($tokenModel->token)){
-                return $this->getTokenExpirationTime($tokenModel->token); 
+        // หาพบข้อมูล token ในฐานข้อมูล
+        if($tokenModel){     
+            // ตรวจสอบว่า token หมดอายุหรือยังด้วย getTokenExpirationTime
+            if($this->getTokenExpirationTime($tokenModel->token) > 0){
+                return $tokenModel->token;  
             }else{
-                return $this->RefreshAccessToken();
+                return $this->RefreshAccessToken($tokenModel->id);
             }        
         }else{
             return $this->RefreshAccessToken();
         }
     }
 
-    public function RefreshAccessToken(): string {
+    public function RefreshAccessToken(?string $token = null): string {
 
         $username       = config('morpromt.configs.username');
         $password_hash  = strtoupper(hash_hmac('sha256', config('morpromt.configs.password'), config('morpromt.configs.secretkey')));        
@@ -45,16 +92,26 @@ class MorpromtChanel
         ]);
         
         $url = $url . "/token?" . $queryParams;
+        
         $response = Http::timeout(30)
         ->withHeaders(['Content-Type' => 'application/json',])
         ->post($url);
         if($response->getStatusCode() === 200){
-            try{
-                $model = new Morpromt();
-                $model->token = $response->body();
-                $model->ttl = "86400";
-                $model->save();
-                $result = $response->body();    
+            try{                
+                if(empty($token)){
+                    // บันทึก token ลงฐานข้อมูล
+                    $model = new Morpromt();
+                    $model->token = $response->body();
+                    $model->ttl = "86400";
+                    $model->save();                    
+                }else{
+                    // Update token ใหม่ที่มีอยู่แล้ว
+                    $model = Morpromt::first();
+                    $model->token = $response->body(); 
+                    $model->save();
+                }
+                $result = $response->body(); 
+                   
             }catch(\Exception $ex){
                 echo "Redis connection failed: " . $ex->getMessage(); 
                 $result = "";            
