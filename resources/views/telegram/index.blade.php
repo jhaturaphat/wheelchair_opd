@@ -5,7 +5,28 @@
 @endsection
 
 @section('content')
-<div class="container">    
+<div class="container"> 
+<h1>หมอพร้อม แจ้งเตือน</h1>
+    <div class="card">
+        <div class="card-header">
+            ทดสอบแจ้งเตือนผ่านหมอพร้อม
+            <img src="{{ asset('img/หมอพร้อม-icon.png') }}" alt="ไอคอน" width="64" height="64">   
+        </div>
+        <div class="card-body">
+        <div class="form-group">
+            <label for="fullname">ชื่อ-นามสุกล</label>
+            <input type="text" class="form-control" id="fullname" name="fullname" autocomplete="off">
+            <small id="fullname" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
+        </div> 
+
+        <div class="form-group">
+            <input type="hidden" id="ssn_id">
+            <button class="btn btn-success" id="testMorpromt">ทดสอบ หมอพร้อม</button>
+            <label class="text-muted" id="testfullname">ทดสอบ หมอพร้อม</label>
+        </div>
+        </div>
+    </div>
+
     <h1>ลงทะเบียน Telegram</h1>
 
     {{-- ตรวจสอบก่อนว่ามีข้อมูล --}}
@@ -50,17 +71,11 @@
                         <label for="chatid">รหัส</label>
                         <input type="text" class="form-control" id="id" name="id" readonly required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="fullname">ชื่อ-นามสุกล</label>
                         <input type="text" class="form-control" id="fullname" name="fullname" autocomplete="off">
                         <small id="fullname" class="form-text text-muted">กรอกชื่อ-นามสกุล</small>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="hidden" id="ssn_id">
-                        <button class="btn btn-success" id="testMorpromt">ทดสอบ หมอพร้อม</button>
-                        <label class="text-muted" id="testfullname">ทดสอบ หมอพร้อม</label>
-                    </div>
+                    </div>                     -->
                     
                     <button type="submit" class="btn btn-primary">บันทึก</button>
                     
@@ -68,7 +83,7 @@
             </div> 
         </div>
     @else
-        <div class="alert alert-warning">No message data available</div>
+        <div class="alert alert-warning">ส่งข้อความในกลุ่มก่อน 1 ครั้ง</div>
     @endif
     
 </div>

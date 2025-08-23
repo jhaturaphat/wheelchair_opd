@@ -36,6 +36,7 @@ class TelegramController extends Controller
     // ดึกข้อมูลล่าสุดจาก bot telegram
     public function getUpdateLast()
     {
+        $chat_id = "";
         $token = config('telegram.telegram.bot_token');
         $response = Http::get("https://api.telegram.org/bot{$token}/getUpdates");
         
@@ -47,7 +48,9 @@ class TelegramController extends Controller
         
 
         if (empty($data['result'])) {
-            return response()->json(['error' => 'No messages found'], 404);
+            $chat_id = "";
+            // return view('telegram.index');
+            // return response()->json(['error' => 'ไม่พบขข้อความจาก Telegram ล่าสุด'], 404);
         }
 
         $last_message = collect($data['result'])->sortByDesc('update_id')->first();
@@ -57,7 +60,8 @@ class TelegramController extends Controller
             return response()->json(['error' => 'Invalid message format'], 400);
         }
 
-        $chat_id = $last_message['message']['from']['id'];       
+        $chat_id = $last_message['message']['from']['id'];    
+
                
         try {
             // Notification::send(null, new TelegramNotification('สวัสดี ค่ะ', $chat_id));
