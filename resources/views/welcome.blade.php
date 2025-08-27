@@ -87,7 +87,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="img/logo.png" width="350" class="d-inline-block align-top" alt="">
+                    <img src="{{URL::asset('img/logo.png')}}" width="350" class="d-inline-block align-top" alt="">
                 </div>
                 <div class="title m-b-md" style="color: rgb(7, 78, 13)">
                    <h4 style="margin:0">ระบบเคลื่อนย้ายผู้ป่วย</h4>
