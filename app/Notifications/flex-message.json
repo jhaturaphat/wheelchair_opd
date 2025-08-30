@@ -138,7 +138,8 @@
                                     {
                                         "type": "text",
                                         "text": "__ENDPOINT__",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
