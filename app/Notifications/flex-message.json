@@ -35,7 +35,8 @@
                                     "text": "__SERVICE__",
                                     "size": "sm",
                                     "color": "#111111",
-                                    "align": "end"
+                                    "align": "end",
+                                    "wrap": true
                                 }
                             ]
                         },
@@ -55,7 +56,8 @@
                                         "text": "__FULLNAME__",
                                         "size": "sm",
                                         "color": "#111111",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
@@ -75,7 +77,8 @@
                                         "text": "__POINT__",
                                         "size": "sm",
                                         "color": "#111111",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
@@ -91,7 +94,8 @@
                                     {
                                         "type": "text",
                                         "text": "__BEDNO__",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
@@ -107,7 +111,8 @@
                                     {
                                         "type": "text",
                                         "text": "__CAR__",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
@@ -122,7 +127,8 @@
                                     {
                                         "type": "text",
                                         "text": "__NOTE__",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
@@ -138,7 +144,8 @@
                                     {
                                         "type": "text",
                                         "text": "__ENDPOINT__",
-                                        "align": "end"
+                                        "align": "end",
+                                        "wrap": true
                                     }
                                 ]
                             },
